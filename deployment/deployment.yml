@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ascii-liveGiga
-  namespace: ascii-liveGiga
+  name: ascii-livegiga
+  namespace: ascii-livegiga
 spec:
   selector:
     matchLabels:
-      app: ascii-liveGiga
+      app: ascii-livegiga
   template:
     metadata:
       labels:
-        app: ascii-liveGiga
+        app: ascii-livegiga
     spec:
       containers:
       - image: GigalolE/ascii-live:407342dc
-        name: ascii-liveGiga
+        name: ascii-livegiga
         ports:
         - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ascii-liveGiga
-  namespace: ascii-liveGiga
+  name: ascii-livegiga
+  namespace: ascii-livegiga
 spec:
   selector:
-    app: ascii-liveGiga
+    app: ascii-livegiga
   type: NodePort
   ports:
     - protocol: TCP
@@ -35,8 +35,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ascii-live
-  namespace: ascii-liveGiga
+  name: ascii-livegiga
+  namespace: ascii-livegiga
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: nginx
@@ -44,17 +44,17 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
-  - host: ascii.liveGiga
+  - host: ascii.livegiga
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ascii-liveGiga
+            name: ascii-livegiga
             port:
               number: 8080
   tls:
     - secretName: ascii-live-tls-prod-cert
       hosts:
-        - ascii.liveGiga
+        - ascii.livegiga
